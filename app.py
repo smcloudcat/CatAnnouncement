@@ -128,14 +128,14 @@ def index():
     
     # 传递用户信息给模板
     user_info = session.get('user_info')
-    is_admin = False
+    admin_flag = False
     if user_info and user_info.get('email'):
-        is_admin = is_admin(user_info['email'])
+        admin_flag = is_admin(user_info['email'])
     
     return render_template('index.html',
                            authorization_url=auth_url,
                            user_info=user_info,
-                           is_admin=is_admin)
+                           is_admin=admin_flag)
 
 @app.route('/callback')
 def callback():
