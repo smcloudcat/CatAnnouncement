@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>公告列表</title>
+    <link href="https://cdn.lwcat.cn/layui/css/layui.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; padding: 20px; }
+        .announcement-card { margin-top: 20px; }
+        .announcement-item { margin-bottom: 20px; padding: 15px; background: white; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .announcement-title { font-size: 18px; font-weight: bold; margin-bottom: 10px; }
+        .announcement-meta { color: #999; margin-bottom: 10px; }
+        .announcement-content {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 15px;
+        }
+        .pagination { text-align: center; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <!-- 引入统一导航栏 -->
+    {% include 'navbar.html' %}
+
+    <div class="layui-container">
+        <h1 class="layui-font-20 layui-font-bold">公告列表</h1>
+        
+        <div class="announcement-card">
+            {% if announcements %}
+                {% for announcement in announcements %}
+                <div class="announcement-item">
+                    <div class="announcement-title">{{ announcement.title }}</div>
+                    <div class="announcement-meta">
+                        作者: {{ announcement.author }} | 日期: {{ announcement.created_at[:10] }}
+                    </div>
+                    <div class="announcement-content">
+                        {{ announcement.content }}
+                    </div>
+                    <a href="{{ url_for('announcement_detail', id=announcement.id) }}" class="layui-btn layui-btn-sm layui-btn-primary">查看详情</a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="layui-empty">
+                    <i class="layui-icon">&#xe609;</i>
+                    <p>暂无公告</p>
+                </div>
+            {% endif %}
+        </div>
+        
+        {% if total_pages > 1 %}
+            <div class="pagination">
+                {% if current_page > 1 %}
+                    <a href="{{ url_for('announcements', page=current_page-1) }}" class="layui-btn layui-btn-sm">上一页</a>
+                {% endif %}
+                
+                {% for page_num in range(1, total_pages+1) %}
+                    <a href="{{ url_for('announcements', page=page_num) }}"
+                       class="layui-btn layui-btn-sm {% if page_num == current_page %}layui-btn-primary{% else %}layui-btn-default{% endif %}">
+                        {{ page_num }}
+                    </a>
+                {% endfor %}
+                
+                {% if current_page < total_pages %}
+                    <a href="{{ url_for('announcements', page=current_page+1) }}" class="layui-btn layui-btn-sm">下一页</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+    
+    <script src="https://cdn.lwcat.cn/layui/layui.js"></script>
+    <script>
+        layui.use(['element'], function(){
+            var element = layui.element;
+        });
+    </script>
+</body>
+</html>

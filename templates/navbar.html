@@ -1,0 +1,35 @@
+<!-- 现代化导航栏 -->
+<div class="modern-nav">
+    <div class="layui-container">
+        <div class="layui-row">
+            <div class="layui-col-md12">
+                <ul class="layui-nav" lay-filter="nav">
+                    <li class="layui-nav-item layui-this"><a href="/">首页</a></li>
+                    <li class="layui-nav-item"><a href="{{ url_for('announcements') }}">公告列表</a></li>
+                    {% if is_admin %}
+                    <li class="layui-nav-item">
+                        <a href="javascript:;"><i class="layui-icon layui-icon-user"></i> 管理员</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="{{ url_for('manage_admins') }}"><i class="layui-icon layui-icon-add-1"></i> 添加管理员</a></dd>
+                            <dd><a href="#"><i class="layui-icon layui-icon-list"></i> 管理列表</a></dd>
+                        </dl>
+                    </li>
+                    {% endif %}
+                    {% if user_info %}
+                    <li class="layui-nav-item" style="float: right;">
+                        <a href="javascript:;"><i class="layui-icon layui-icon-username"></i> {{ user_info.nickname }}</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="{{ url_for('user_settings') }}"><i class="layui-icon layui-icon-set"></i> 设置</a></dd>
+                            <dd><a href="{{ url_for('logout') }}"><i class="layui-icon layui-icon-logout"></i> 退出</a></dd>
+                        </dl>
+                    </li>
+                    {% else %}
+                    <li class="layui-nav-item" style="float: right;">
+                        <a href="{{ authorization_url }}" class="layui-btn layui-btn-sm layui-btn-primary">登录</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

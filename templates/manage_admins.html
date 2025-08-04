@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>管理员管理</title>
+    <link href="https://cdn.lwcat.cn/layui/css/layui.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .layui-card {
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .layui-card-header {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .admin-table {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="layui-container">
+        <!-- 导航栏 -->
+        <ul class="layui-nav">
+            <li class="layui-nav-item"><a href="{{ url_for('announcements') }}">公告列表</a></li>
+            <li class="layui-nav-item"><a href="{{ url_for('manage_announcements') }}">管理公告</a></li>
+            <li class="layui-nav-item layui-this"><a href="{{ url_for('manage_admins') }}">管理员管理</a></li>
+            <li class="layui-nav-item" style="float: right;">
+                <a href="javascript:;">
+                    <i class="layui-icon layui-icon-username"></i>
+                    {{ session['user_info']['nickname'] }}
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="{{ url_for('logout') }}">退出</a></dd>
+                </dl>
+            </li>
+        </ul>
+
+        <div class="layui-card">
+            <div class="layui-card-header">添加/移除管理员</div>
+            <div class="layui-card-body">
+                <form class="layui-form" method="POST" action="{{ url_for('manage_admins') }}">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">管理员邮箱</label>
+                        <div class="layui-input-block">
+                            <input type="email" class="layui-input" name="email" required lay-verify="email" placeholder="请输入管理员邮箱">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn layui-btn-normal" name="action" value="add" lay-submit>添加管理员</button>
+                            <button class="layui-btn layui-btn-danger" name="action" value="remove" lay-submit>移除管理员</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="layui-card admin-table">
+            <div class="layui-card-header">当前管理员列表</div>
+            <div class="layui-card-body">
+                <table class="layui-table">
+                    <colgroup>
+                        <col width="60%">
+                        <col width="40%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>邮箱</th>
+                            <th>角色</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for admin in admins %}
+                        <tr>
+                            <td>{{ admin }}</td>
+                            <td>
+                                {% if admin == super_admin %}
+                                <span class="layui-badge layui-bg-red">总管理员</span>
+                                {% else %}
+                                <span class="layui-badge">管理员</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 将模板变量转换为JS变量
+        var showSuccess = '{{ show_success|lower }}' === 'true';
+    </script>
+    <script src="https://cdn.lwcat.cn/layui/layui.js"></script>
+    <script>
+        layui.use(['form', 'element', 'layer'], function(){
+            var form = layui.form;
+            var element = layui.element;
+            var layer = layui.layer;
+            
+            // 操作结果提示
+            if (showSuccess) {
+                layer.msg('操作成功', {icon: 1});
+            }
+        });
+    </script>
+</body>
+</html>

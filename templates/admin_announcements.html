@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>公告管理</title>
+    <link href="https://cdn.lwcat.cn/layui/css/layui.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; padding: 20px; }
+        .announcement-card { margin-top: 20px; }
+        .form-container { background-color: #fff; padding: 20px; border-radius: 5px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <!-- 引入统一导航栏 -->
+    {% include 'navbar.html' %}
+
+    <div class="layui-container">
+        <h1 class="layui-font-20 layui-font-bold">公告管理</h1>
+        
+        <div class="form-container">
+            <h3 class="layui-font-16">发布新公告</h3>
+            <form class="layui-form" method="POST" action="{{ url_for('manage_announcements') }}">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input" name="title" required lay-verify="required" placeholder="请输入公告标题">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">内容</label>
+                    <div class="layui-input-block">
+                        <textarea class="layui-textarea" name="content" rows="5" required lay-verify="required" placeholder="请输入公告内容"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit>发布公告</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <div class="announcement-card">
+            <h3 class="layui-font-16">现有公告</h3>
+            {% if announcements %}
+                <table class="layui-table">
+                    <colgroup>
+                        <col width="10%">
+                        <col width="30%">
+                        <col width="20%">
+                        <col width="20%">
+                        <col width="20%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>标题</th>
+                            <th>作者</th>
+                            <th>发布日期</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for announcement in announcements|reverse %}
+                            <tr>
+                                <td>{{ announcement.id }}</td>
+                                <td>{{ announcement.title }}</td>
+                                <td>{{ announcement.author }}</td>
+                                <td>{{ announcement.created_at[:10] }}</td>
+                                <td>
+                                    <a href="{{ url_for('announcement_detail', id=announcement.id) }}" class="layui-btn layui-btn-xs layui-btn-normal">查看</a>
+                                    <a href="{{ url_for('delete_announcement', id=announcement.id) }}" class="layui-btn layui-btn-xs layui-btn-danger" onclick="return confirm('确定删除此公告吗？')">删除</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="layui-empty">
+                    <i class="layui-icon">&#xe609;</i>
+                    <p>暂无公告</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <script src="https://cdn.lwcat.cn/layui/layui.js"></script>
+    <script>
+        layui.use(['form'], function(){
+            var form = layui.form;
+        });
+    </script>
+</body>
+</html>
