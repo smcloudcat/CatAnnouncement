@@ -2,23 +2,64 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>用户设置</title>
     <link href="https://cdn.lwcat.cn/layui/css/layui.css" rel="stylesheet">
     <style>
-        body { background-color: #f8f9fa; padding: 20px; }
-        .setting-card { margin-top: 20px; }
-        .setting-header { padding: 10px 15px; font-weight: bold; }
+        body {
+            background-color: #f2f3f5;
+            padding: 20px;
+        }
+        .main-container {
+            margin-top: 1.25rem; /* 20px -> 1.25rem */
+        }
+        .layui-card {
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 1.5625rem; /* 25px -> 1.5625rem */
+            border: none;
+        }
+        .layui-card-header {
+            border-bottom: 1px solid #f0f0f0;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 15px 20px;
+            border-radius: 8px 8px 0 0;
+            background-color: #f8fafc;
+        }
+        .layui-form-item {
+            margin-bottom: 1.25rem; /* 20px -> 1.25rem */
+        }
+        .readonly-field {
+            background-color: #f8f8f8;
+        }
+        .success-message {
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 4px;
+            background-color: #5FB878;
+            color: white;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .layui-card {
+                border-radius: 6px;
+            }
+            .layui-form-item .layui-form-label {
+                text-align: left;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- 引入统一导航栏 -->
     {% include 'navbar.html' %}
 
-    <div class="layui-container">
+    <div class="layui-container main-container">
         <h1 class="layui-font-20 layui-font-bold">用户设置</h1>
         
-        <div class="layui-card setting-card">
-            <div class="layui-card-header setting-header">邮箱通知设置</div>
+        <div class="layui-card">
+            <div class="layui-card-header">邮箱通知设置</div>
             <div class="layui-card-body">
                 <form class="layui-form" method="POST" action="{{ url_for('user_settings') }}">
                     <div class="layui-form-item">
@@ -40,12 +81,12 @@
                     
                     <div class="layui-form-item">
                         <div class="layui-input-block">
-                            <button class="layui-btn" lay-submit>保存设置</button>
+                            <button class="layui-btn layui-bg-blue" lay-submit>保存设置</button>
                         </div>
                     </div>
                     
                     {% if save_success %}
-                        <div class="layui-bg-green" style="padding: 10px; margin-top: 15px; border-radius: 4px;">
+                        <div class="success-message">
                             设置已成功保存！
                         </div>
                     {% endif %}
@@ -53,25 +94,28 @@
             </div>
         </div>
         
-        <div class="layui-card setting-card">
-            <div class="layui-card-header setting-header">账号信息</div>
+        <div class="layui-card">
+            <div class="layui-card-header">账号信息</div>
             <div class="layui-card-body">
                 <div class="layui-form-item">
                     <label class="layui-form-label">用户ID</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" value="{{ session['user_info']['id'] }}" readonly>
+                        <input type="text" class="layui-input readonly-field"
+                               value="{{ session['user_info']['id'] }}" readonly>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">昵称</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" value="{{ session['user_info']['nickname'] }}" readonly>
+                        <input type="text" class="layui-input readonly-field"
+                               value="{{ session['user_info']['nickname'] }}" readonly>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">邮箱</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" value="{{ session['user_info']['email'] }}" readonly>
+                        <input type="text" class="layui-input readonly-field"
+                               value="{{ session['user_info']['email'] }}" readonly>
                     </div>
                 </div>
             </div>

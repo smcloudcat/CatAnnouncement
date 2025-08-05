@@ -5,82 +5,149 @@
     <title>公告管理</title>
     <link href="https://cdn.lwcat.cn/layui/css/layui.css" rel="stylesheet">
     <style>
-        body { background-color: #f8f9fa; padding: 20px; }
-        .announcement-card { margin-top: 20px; }
-        .form-container { background-color: #fff; padding: 20px; border-radius: 5px; margin-bottom: 20px; }
+        body {
+            background-color: #f2f3f5;
+            padding: 20px;
+        }
+        .main-container {
+            margin-top: 20px;
+        }
+        .layui-card {
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            border: none;
+        }
+        .layui-card-header {
+            border-bottom: 1px solid #f0f0f0;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 15px 20px;
+            border-radius: 8px 8px 0 0;
+            background-color: #f8fafc;
+        }
+        .layui-table {
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .layui-table thead tr {
+            background-color: #f8f8f8;
+        }
+        .layui-table tbody tr:hover {
+            background-color: #fbfbfb;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        @media (max-width: 768px) {
+            .layui-card {
+                border-radius: 6px;
+            }
+            .layui-table thead {
+                display: none;
+            }
+            .layui-table tr {
+                display: block;
+                margin-bottom: 15px;
+                border-bottom: 1px solid #eee;
+            }
+            .layui-table td {
+                display: flex;
+                justify-content: space-between;
+                padding: 10px 15px;
+                border: none;
+            }
+            .layui-table td:before {
+                content: attr(data-label);
+                font-weight: bold;
+                width: 100px;
+                min-width: 100px;
+                color: #666;
+            }
+            .action-buttons {
+                justify-content: flex-end;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- 引入统一导航栏 -->
     {% include 'navbar.html' %}
 
-    <div class="layui-container">
+    <div class="layui-container main-container">
         <h1 class="layui-font-20 layui-font-bold">公告管理</h1>
         
-        <div class="form-container">
-            <h3 class="layui-font-16">发布新公告</h3>
-            <form class="layui-form" method="POST" action="{{ url_for('manage_announcements') }}">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">标题</label>
-                    <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="title" required lay-verify="required" placeholder="请输入公告标题">
+        <div class="layui-card">
+            <div class="layui-card-header">发布新公告</div>
+            <div class="layui-card-body">
+                <form class="layui-form" method="POST" action="{{ url_for('manage_announcements') }}">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">标题</label>
+                        <div class="layui-input-block">
+                            <input type="text" class="layui-input" name="title" required lay-verify="required" placeholder="请输入公告标题">
+                        </div>
                     </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">内容</label>
-                    <div class="layui-input-block">
-                        <textarea class="layui-textarea" name="content" rows="5" required lay-verify="required" placeholder="请输入公告内容"></textarea>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">内容</label>
+                        <div class="layui-input-block">
+                            <textarea class="layui-textarea" name="content" rows="5" required lay-verify="required" placeholder="请输入公告内容"></textarea>
+                        </div>
                     </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-input-block">
-                        <button class="layui-btn" lay-submit>发布公告</button>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn layui-bg-blue" lay-submit>发布公告</button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
         
-        <div class="announcement-card">
-            <h3 class="layui-font-16">现有公告</h3>
-            {% if announcements %}
-                <table class="layui-table">
-                    <colgroup>
-                        <col width="10%">
-                        <col width="30%">
-                        <col width="20%">
-                        <col width="20%">
-                        <col width="20%">
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>标题</th>
-                            <th>作者</th>
-                            <th>发布日期</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for announcement in announcements|reverse %}
+        <div class="layui-card">
+            <div class="layui-card-header">现有公告</div>
+            <div class="layui-card-body">
+                {% if announcements %}
+                    <table class="layui-table">
+                        <colgroup>
+                            <col width="10%">
+                            <col width="30%">
+                            <col width="20%">
+                            <col width="20%">
+                            <col width="20%">
+                        </colgroup>
+                        <thead>
                             <tr>
-                                <td>{{ announcement.id }}</td>
-                                <td>{{ announcement.title }}</td>
-                                <td>{{ announcement.author }}</td>
-                                <td>{{ announcement.created_at[:10] }}</td>
-                                <td>
-                                    <a href="{{ url_for('announcement_detail', id=announcement.id) }}" class="layui-btn layui-btn-xs layui-btn-normal">查看</a>
-                                    <a href="{{ url_for('delete_announcement', id=announcement.id) }}" class="layui-btn layui-btn-xs layui-btn-danger" onclick="return confirm('确定删除此公告吗？')">删除</a>
-                                </td>
+                                <th>ID</th>
+                                <th>标题</th>
+                                <th>作者</th>
+                                <th>发布日期</th>
+                                <th>操作</th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            {% else %}
-                <div class="layui-empty">
-                    <i class="layui-icon">&#xe609;</i>
-                    <p>暂无公告</p>
-                </div>
-            {% endif %}
+                        </thead>
+                        <tbody>
+                            {% for announcement in announcements|reverse %}
+                                <tr>
+                                    <td>{{ announcement.id }}</td>
+                                    <td>{{ announcement.title }}</td>
+                                    <td>{{ announcement.author }}</td>
+                                    <td>{{ announcement.created_at[:10] }}</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <a href="{{ url_for('announcement_detail', id=announcement.id) }}" class="layui-btn layui-btn-xs layui-bg-blue">查看</a>
+                                            <a href="{{ url_for('delete_announcement', id=announcement.id) }}" class="layui-btn layui-btn-xs layui-bg-red" onclick="return confirm('确定删除此公告吗？')">删除</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="layui-empty">
+                        <i class="layui-icon">&#xe609;</i>
+                        <p>暂无公告</p>
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </div>
     
@@ -88,6 +155,20 @@
     <script>
         layui.use(['form'], function(){
             var form = layui.form;
+            
+            // 响应式表格处理
+            if (window.innerWidth < 768) {
+                document.querySelectorAll('.layui-table tbody tr').forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    const headers = document.querySelectorAll('.layui-table thead th');
+                    
+                    cells.forEach((cell, index) => {
+                        if (index < headers.length - 1) {
+                            cell.setAttribute('data-label', headers[index].textContent);
+                        }
+                    });
+                });
+            }
         });
     </script>
 </body>

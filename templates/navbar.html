@@ -1,35 +1,172 @@
-<!-- 现代化导航栏 -->
-<div class="modern-nav">
+<!-- Modern Navigation Bar -->
+<nav class="modern-nav" aria-label="Main navigation">
     <div class="layui-container">
-        <div class="layui-row">
-            <div class="layui-col-md12">
-                <ul class="layui-nav" lay-filter="nav">
-                    <li class="layui-nav-item layui-this"><a href="/">首页</a></li>
-                    <li class="layui-nav-item"><a href="{{ url_for('announcements') }}">公告列表</a></li>
-                    {% if is_admin %}
-                    <li class="layui-nav-item">
-                        <a href="javascript:;"><i class="layui-icon layui-icon-user"></i> 管理员</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="{{ url_for('manage_admins') }}"><i class="layui-icon layui-icon-add-1"></i> 添加管理员</a></dd>
-                            <dd><a href="#"><i class="layui-icon layui-icon-list"></i> 管理列表</a></dd>
-                        </dl>
-                    </li>
-                    {% endif %}
-                    {% if user_info %}
-                    <li class="layui-nav-item" style="float: right;">
-                        <a href="javascript:;"><i class="layui-icon layui-icon-username"></i> {{ user_info.nickname }}</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="{{ url_for('user_settings') }}"><i class="layui-icon layui-icon-set"></i> 设置</a></dd>
-                            <dd><a href="{{ url_for('logout') }}"><i class="layui-icon layui-icon-logout"></i> 退出</a></dd>
-                        </dl>
-                    </li>
-                    {% else %}
-                    <li class="layui-nav-item" style="float: right;">
-                        <a href="{{ authorization_url }}" class="layui-btn layui-btn-sm layui-btn-primary">登录</a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
+        <button class="layui-nav-mobile-btn" aria-label="Toggle menu" aria-expanded="false">
+            <i class="layui-icon layui-icon-spread-left" aria-hidden="true"></i>
+        </button>
+        <ul class="layui-nav" lay-filter="nav" role="menubar">
+            <li class="layui-nav-item layui-this" role="none">
+                <a href="/" role="menuitem">公告</a>
+            </li>
+            {% if is_admin %}
+                <li class="layui-nav-item" role="none">
+                    <a href="{{ url_for('manage_announcements') }}" role="menuitem">管理公告</a>
+                </li>
+                <li class="layui-nav-item" role="none">
+                    <a href="javascript:;" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                        <i class="layui-icon layui-icon-user" aria-hidden="true"></i> 管理员
+                    </a>
+                    <ul class="layui-nav-child" role="menu">
+                        <li role="none">
+                            <a href="{{ url_for('manage_admins') }}" role="menuitem">
+                                <i class="layui-icon layui-icon-add-1" aria-hidden="true"></i> 管理管理员
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            {% endif %}
+            <li class="layui-nav-item layui-nav-user" role="none">
+                {% if user_info %}
+                    <a href="javascript:;" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                        <i class="layui-icon layui-icon-username" aria-hidden="true"></i> {{ user_info.nickname }}
+                    </a>
+                    <ul class="layui-nav-child" role="menu">
+                        <li role="none">
+                            <a href="{{ url_for('user_settings') }}" role="menuitem">
+                                <i class="layui-icon layui-icon-set" aria-hidden="true"></i> 设置
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a href="{{ url_for('logout') }}" role="menuitem">
+                                <i class="layui-icon layui-icon-logout" aria-hidden="true"></i> 退出
+                            </a>
+                        </li>
+                    </ul>
+                {% else %}
+                    <a href="{{ authorization_url }}" class="layui-btn layui-btn-sm layui-bg-blue" role="menuitem">登录</a>
+                {% endif %}
+            </li>
+        </ul>
     </div>
-</div>
+</nav>
+<style>
+.modern-nav {
+    padding: 15px 0;
+    position: relative;
+    background: #fff;
+}
+
+.layui-nav {
+    display: flex;
+    align-items: center;
+    background: #fff; /* Ensure background is set */
+}
+
+.layui-nav-item a {
+    color: #333 !important; /* Explicit text color for visibility */
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+}
+
+.layui-nav-user {
+    margin-left: auto;
+}
+
+.layui-nav-mobile-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    z-index: 1001;
+    color: #333; /* Ensure button icon is visible */
+}
+
+.layui-nav-child {
+    background: #f8f8f8; /* Distinct background for dropdown */
+}
+
+.layui-nav-child a {
+    color: #333 !important; /* Ensure dropdown text is visible */
+}
+
+@media (max-width: 768px) {
+    .layui-nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #fff;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        flex-direction: column;
+        z-index: 1000;
+    }
+
+    .layui-nav-show {
+        display: flex;
+        animation: fadeInDown 0.3s ease-out;
+    }
+
+    .layui-nav-mobile-btn {
+        display: block;
+    }
+
+    .layui-nav-user {
+        margin-left: 0;
+    }
+
+    .layui-nav-child {
+        position: static;
+        box-shadow: none;
+        background: #f8f8f8;
+        width: 100%;
+    }
+
+    .layui-nav-item {
+        width: 100%;
+        text-align: left;
+    }
+
+    .layui-nav-item a {
+        padding: 10px 20px;
+    }
+}
+
+@media (min-width: 769px) {
+    .layui-nav-child {
+        position: absolute;
+        background: #fff;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        min-width: 150px;
+    }
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const mobileBtn = document.querySelector('.layui-nav-mobile-btn');
+    const navMenu = document.querySelector('.layui-nav');
+    
+    mobileBtn.addEventListener('click', () => {
+        const isExpanded = mobileBtn.getAttribute('aria-expanded') === 'true';
+        mobileBtn.setAttribute('aria-expanded', !isExpanded);
+        navMenu.classList.toggle('layui-nav-show');
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            navMenu.classList.remove('layui-nav-show');
+            mobileBtn.setAttribute('aria-expanded', 'false');
+        }
+    });
+});
+</script>

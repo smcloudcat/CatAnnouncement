@@ -2,82 +2,76 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CAt公告</title>
     <link href="https://cdn.lwcat.cn/layui/css/layui.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #f2f3f5;
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            padding-bottom: 30px;
         }
-        .header {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
-            padding: 80px 0;
-            text-align: center;
-            margin-bottom: 30px;
+        .main-container {
+            margin-top: 1.25rem; /* 20px -> 1.25rem */
         }
-        .login-card {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            padding: 40px;
-            margin-top: -100px;
-        }
-        .feature-card {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            padding: 25px;
-            text-align: center;
-            height: 100%;
-            transition: transform 0.3s;
-        }
-        .feature-card:hover {
-            transform: translateY(-10px);
-        }
-        .feature-icon {
-            font-size: 40px;
-            color: #6a11cb;
-            margin-bottom: 20px;
-        }
-        .login-btn {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        .layui-card {
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 1.25rem; /* 20px -> 1.25rem */
             border: none;
-            border-radius: 25px;
-            padding: 12px 30px;
+        }
+        .layui-card-header {
+            border-bottom: 1px solid #f0f0f0;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 15px 20px;
+            border-radius: 8px 8px 0 0;
+            background-color: #f8fafc;
+        }
+        .layui-timeline-item {
+            padding-bottom: 1.25rem; /* 20px -> 1.25rem */
+        }
+        .layui-timeline-title {
             font-size: 16px;
-            transition: all 0.3s;
+            margin-bottom: 10px;
+            color: #333;
         }
-        .login-btn:hover {
-            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
-            transform: translateY(-3px);
+        .layui-timeline-content p {
+            color: #666;
+            margin-bottom: 8px;
         }
-        .footer {
-            background: #343a40;
-            color: rgba(255,255,255,0.8);
-            padding: 30px 0;
-            margin-top: 50px;
+        .layui-timeline-content small {
+            color: #999;
+            font-size: 12px;
         }
-        .modern-nav {
-            background: rgba(255,255,255,0.95);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 0 15px;
+        .layui-btn {
+            border-radius: 4px;
+        }
+        .layui-empty {
+            padding: 40px 0;
+            text-align: center;
+            color: #999;
+        }
+        .layui-empty i {
+            font-size: 50px;
+            margin-bottom: 15px;
+            color: #c2c2c2;
+        }
+        @media (max-width: 768px) {
+            .main-container {
+                margin-top: 10px;
+            }
+            .layui-card {
+                border-radius: 6px;
+            }
         }
     </style>
 </head>
 <body>
     <!-- 引入统一导航栏 -->
     {% include 'navbar.html' %}
-    
-    <!-- 头部区域 -->
-    <div class="header">
-        <div class="layui-container">
-            <h1 style="font-size: 42px; font-weight: 700;">公告发布系统</h1>
-            <p style="font-size: 18px; opacity: 0.9;">安全、高效的公告管理与通知服务</p>
-        </div>
-    </div>
 
-    <div class="layui-container">
+    <div class="layui-container main-container">
         <div class="layui-row">
             <div class="layui-col-md12">
                 <div class="layui-card">
@@ -92,7 +86,7 @@
                                         <h3 class="layui-timeline-title">{{ announcement.title }}</h3>
                                         <p>{{ announcement.content|truncate(100) }}</p>
                                         <p><small>{{ announcement.created_at[:10] }}</small></p>
-                                        <a href="{{ url_for('announcement_detail', id=announcement.id) }}" class="layui-btn layui-btn-sm">查看详情</a>
+                                        <a href="{{ url_for('announcement_detail', id=announcement.id) }}" class="layui-btn layui-btn-sm layui-bg-blue">查看详情</a>
                                     </div>
                                 </li>
                                 {% endfor %}
@@ -104,21 +98,6 @@
                             </div>
                         {% endif %}
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 页脚 -->
-    <div class="footer">
-        <div class="layui-container">
-            <div class="layui-row">
-                <div class="layui-col-md6">
-                    <h5>公告发布系统</h5>
-                    <p>提供安全高效的公告管理与通知服务</p>
-                </div>
-                <div class="layui-col-md6" style="text-align: right;">
-                    <p>&copy; {{ current_year }} 版权所有</p>
                 </div>
             </div>
         </div>

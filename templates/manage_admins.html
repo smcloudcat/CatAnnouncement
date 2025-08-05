@@ -2,44 +2,86 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>管理员管理</title>
     <link href="https://cdn.lwcat.cn/layui/css/layui.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #f2f3f5;
             padding: 20px;
         }
+        .main-container {
+            margin-top: 1.25rem; /* 20px -> 1.25rem */
+        }
         .layui-card {
-            margin-bottom: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 1.5625rem; /* 25px -> 1.5625rem */
+            border: none;
         }
         .layui-card-header {
+            border-bottom: 1px solid #f0f0f0;
             font-weight: bold;
             font-size: 18px;
+            padding: 15px 20px;
+            border-radius: 8px 8px 0 0;
+            background-color: #f8fafc;
         }
-        .admin-table {
-            margin-top: 20px;
+        .layui-table {
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .layui-table thead tr {
+            background-color: #f8f8f8;
+        }
+        .layui-table tbody tr:hover {
+            background-color: #fbfbfb;
+        }
+        .role-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            color: white;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        @media (max-width: 768px) {
+            .layui-card {
+                border-radius: 6px;
+            }
+            .layui-table thead {
+                display: none;
+            }
+            .layui-table tr {
+                display: block;
+                margin-bottom: 15px;
+                border-bottom: 1px solid #eee;
+            }
+            .layui-table td {
+                display: flex;
+                justify-content: space-between;
+                padding: 10px 15px;
+                border: none;
+            }
+            .layui-table td:before {
+                content: attr(data-label);
+                font-weight: bold;
+                width: 100px;
+                min-width: 100px;
+                color: #666;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="layui-container">
-        <!-- 导航栏 -->
-        <ul class="layui-nav">
-            <li class="layui-nav-item"><a href="{{ url_for('announcements') }}">公告列表</a></li>
-            <li class="layui-nav-item"><a href="{{ url_for('manage_announcements') }}">管理公告</a></li>
-            <li class="layui-nav-item layui-this"><a href="{{ url_for('manage_admins') }}">管理员管理</a></li>
-            <li class="layui-nav-item" style="float: right;">
-                <a href="javascript:;">
-                    <i class="layui-icon layui-icon-username"></i>
-                    {{ session['user_info']['nickname'] }}
-                </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="{{ url_for('logout') }}">退出</a></dd>
-                </dl>
-            </li>
-        </ul>
+    <!-- 引入统一导航栏 -->
+    {% include 'navbar.html' %}
+
+    <div class="layui-container main-container">
+        <h1 class="layui-font-20 layui-font-bold">管理员管理</h1>
 
         <div class="layui-card">
             <div class="layui-card-header">添加/移除管理员</div>
@@ -53,15 +95,15 @@
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-block">
-                            <button class="layui-btn layui-btn-normal" name="action" value="add" lay-submit>添加管理员</button>
-                            <button class="layui-btn layui-btn-danger" name="action" value="remove" lay-submit>移除管理员</button>
+                            <button class="layui-btn layui-bg-blue" name="action" value="add" lay-submit>添加管理员</button>
+                            <button class="layui-btn layui-bg-red" name="action" value="remove" lay-submit>移除管理员</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
 
-        <div class="layui-card admin-table">
+        <div class="layui-card">
             <div class="layui-card-header">当前管理员列表</div>
             <div class="layui-card-body">
                 <table class="layui-table">
@@ -81,9 +123,9 @@
                             <td>{{ admin }}</td>
                             <td>
                                 {% if admin == super_admin %}
-                                <span class="layui-badge layui-bg-red">总管理员</span>
+                                <span class="role-badge layui-bg-red">总管理员</span>
                                 {% else %}
-                                <span class="layui-badge">管理员</span>
+                                <span class="role-badge layui-bg-blue">管理员</span>
                                 {% endif %}
                             </td>
                         </tr>
@@ -107,7 +149,21 @@
             
             // 操作结果提示
             if (showSuccess) {
-                layer.msg('操作成功', {icon: 1});
+                layer.msg('操作成功', {icon: 1, time: 2000});
+            }
+            
+            // 响应式表格处理
+            if (window.innerWidth < 768) {
+                document.querySelectorAll('.layui-table tbody tr').forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    const headers = document.querySelectorAll('.layui-table thead th');
+                    
+                    cells.forEach((cell, index) => {
+                        if (index < headers.length) {
+                            cell.setAttribute('data-label', headers[index].textContent);
+                        }
+                    });
+                });
             }
         });
     </script>
