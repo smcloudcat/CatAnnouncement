@@ -1,83 +1,99 @@
-# CatOauth Python 示例
+# CatAnnouncement 公告系统
 
-这是一个使用Python Flask框架实现的OAuth 2.0客户端示例，演示如何与授权服务器集成实现第三方登录功能。
+![演示1](https://v1.luoli.click/?file=750aab814130d0cc_1754493113.png)
+![演示2](https://v1.luoli.click/?file=a04fdf5ab731bb95_1754493116.png)
+![演示3](https://v1.luoli.click/?file=7272bd92de1d2304_1754493118.png)
 
-## 功能特性
+基于Flask开发的轻量级公告系统，支持OAuth用户认证、分级权限管理和邮件订阅通知功能。
 
-- 实现OAuth 2.0授权码流程
-- 支持state参数防止CSRF攻击
-- 获取用户基本信息（ID、昵称、邮箱、头像）
-- 用户信息展示页面
-- 退出登录功能
+## 演示站点
+[自用演示](https://hello.luoli.click/settings)
+
+
+## 功能特点
+
+- ✅ **OAuth用户认证** - 集成猫猫OAuth服务
+- 📢 **公告管理** - 创建/查看/删除公告
+- 📧 **邮件通知** - 新公告自动邮件提醒
+- 👑 **分级权限** - 超级管理员与普通管理员
+- ⚙️ **用户设置** - 自定义通知偏好
+- 📱 **响应式设计** - 适配移动设备
+
+## 项目结构
+
+```bash
+├── app.py               # 主应用入口
+├── config.py            # 配置文件
+├── requirements.txt     # 依赖列表
+├── announcements.json   # 公告数据存储
+├── users.json           # 用户数据存储
+├── admins.json          # 管理员数据存储
+├── static/              # 静态资源
+│   ├── css/
+│   └── js/
+└── templates/           # HTML模板
+    ├── index.html
+    ├── admin_announcements.html
+    ├── announcement_detail.html
+    └── ...其他模板
+```
 
 ## 快速开始
 
-### 前置条件
-- Python 3.7+
-- pip 包管理工具
-
-### 安装步骤
-
-1. 克隆仓库：
-```bash
-git clone https://github.com/smcloudcat/CatOauth-python-Demo.git
-cd CatOauth-python-Demo
-```
-
-2. 安装依赖：
+### 安装依赖
 ```bash
 pip install -r requirements.txt
+```
+
+### 配置系统
+编辑 `config.py` 设置以下参数：
+```python
+# OAuth配置
+CLIENT_ID = 'CatAnnouncement'
+REDIRECT_URI = 'http://your-domain.com/callback'
+
+# 邮件服务配置
+MAIL_SERVER = 'smtp.your-email-provider.com'
+MAIL_PORT = 465
+MAIL_USE_SSL = True
+MAIL_USERNAME = 'your-email@example.com'
+MAIL_PASSWORD = 'your-email-password'
 ```
 
 ### 运行应用
 ```bash
 python app.py
 ```
+访问 http://localhost:5000
 
-应用将在 http://localhost:5000 启动
+## 使用指南
 
-## 配置说明
+### 普通用户
+1. 点击首页登录按钮
+2. 完成OAuth认证
+3. 在"用户设置"中配置邮箱和通知偏好
+4. 查看公告列表和详情
 
-编辑 `config.py` 文件配置OAuth参数：
+### 管理员
+1. 使用超级管理员邮箱登录
+2. 进入"管理公告"创建新公告
+3. 在"管理管理员"中添加/移除其他管理员
+
+## 开发说明
+
+系统使用后台线程处理邮件通知：
 ```python
-# 客户端ID（随意）
-CLIENT_ID = 'your-client-id'
-
-# 回调地址
-REDIRECT_URI = 'http://your-domain/callback'
-
-# 授权服务器端点
-AUTHORIZATION_ENDPOINT = 'https://oauth.lwcat.cn/oauth/authorize'
-TOKEN_ENDPOINT = 'https://oauth.lwcat.cn/oauth/token'
-USERINFO_ENDPOINT = 'https://oauth.lwcat.cn/api/me'
-
-# 请求的权限范围
-SCOPE = 'profile email avatar username'
+def email_sender():
+    while True:
+        # 检查新公告并发送邮件
+        time.sleep(10)
 ```
-
-## 项目结构
-```
-CatOauth-python-Demo/
-├── app.py              # 主应用文件
-├── config.py           # 配置文件
-├── requirements.txt    # 依赖列表
-└── templates/          # 模板文件
-    ├── index.html      # 登录页面
-    └── user_info.html  # 用户信息页面
-```
-
-## 使用流程
-
-1. 访问 http://localhost:5000
-2. 点击"使用授权平台登录"按钮
-3. 授权后跳转回应用
-4. 查看用户信息
-5. 可点击"退出登录"返回首页
 
 ## 贡献指南
-
-欢迎提交Issue和Pull Request。请确保代码符合PEP8规范并通过基本测试。
+欢迎提交Issue或Pull Request。请确保：
+1. 遵循现有代码风格
+2. 添加适当的单元测试
+3. 更新相关文档
 
 ## 许可证
-
-本项目采用MIT许可证。详见LICENSE文件。
+[MIT License](LICENSE)

@@ -98,6 +98,7 @@ def email_sender():
         
         if announcements:
             latest_ann = announcements[-1]  # 获取最新公告
+            need_save = False
             
             for user_id, user_data in list(users.items()):
                 if user_data.get('email') and user_data.get('notify') and not user_data.get('sent'):
@@ -107,8 +108,15 @@ def email_sender():
                     if send_email(user_data['email'], subject, content):
                         user_data['sent'] = True
                         users[user_id] = user_data
-                        save_users(users)
-                    break  # 每次只发送一个用户
+                        need_save = True
+                        logger.debug(f"已发送邮件给: {user_data['email']}")
+                    else:
+                        logger.debug(f"邮件发送失败: {user_data['email']}")
+                    # 继续发送下一个用户，不break
+            
+            if need_save:
+                save_users(users)
+                logger.debug("用户数据已保存")
         
         time.sleep(10)  # 每10秒检查一次
 
@@ -132,8 +140,23 @@ def index():
     if user_info and user_info.get('email'):
         admin_flag = is_admin(user_info['email'])
     
+    # 分页参数
+    page = int(request.args.get('page', 1))
+    per_page = 10
+    
+    announcements_list = load_announcements()
+    total = len(announcements_list)
+    
+    # 计算分页
+    start = (page - 1) * per_page
+    end = start + per_page
+    paginated_anns = announcements_list[::-1][start:end]  # 倒序显示最新公告
+    
     return render_template('index.html',
                            authorization_url=auth_url,
+                           announcements=paginated_anns,
+                           current_page=page,
+                           total_pages=(total + per_page - 1) // per_page,
                            user_info=user_info,
                            is_admin=admin_flag)
 

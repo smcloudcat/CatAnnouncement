@@ -1,6 +1,6 @@
 # OAuth配置参数
 CLIENT_ID = 'CatAnnouncement'
-REDIRECT_URI = 'http://ann.nki.pw/callback'  # 本地开发回调地址
+REDIRECT_URI = 'https://hello.luoli.click/callback'  # 本地开发回调地址
 
 # 授权服务器端点URL
 AUTHORIZATION_ENDPOINT = 'https://oauth.lwcat.cn/oauth/authorize'

@@ -436,3 +436,17 @@ body {
         font-size: 14px;
     }
 }
+/* 底部样式 */
+.site-footer {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    text-align: center;
+    border-top: 1px solid #e9ecef;
+    margin-top: 40px;
+}
+
+.site-footer p {
+    margin: 5px 0;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
