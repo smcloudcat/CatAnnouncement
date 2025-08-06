@@ -4,7 +4,7 @@
             <i class="layui-icon layui-icon-spread-left" aria-hidden="true"></i>
         </button>
         <ul class="layui-nav" lay-filter="nav" role="menubar">
-            <li class="layui-nav-item layui-this" role="none">
+            <li class="layui-nav-item" role="none">
                 <a href="/" role="menuitem">公告</a>
             </li>
             {% if is_admin %}
@@ -150,22 +150,3 @@
     to { opacity: 1; transform: translateY(0); }
 }
 </style>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const mobileBtn = document.querySelector('.layui-nav-mobile-btn');
-    const navMenu = document.querySelector('.layui-nav');
-    
-    mobileBtn.addEventListener('click', () => {
-        const isExpanded = mobileBtn.getAttribute('aria-expanded') === 'true';
-        mobileBtn.setAttribute('aria-expanded', !isExpanded);
-        navMenu.classList.toggle('layui-nav-show');
-    });
-
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 768) {
-            navMenu.classList.remove('layui-nav-show');
-            mobileBtn.setAttribute('aria-expanded', 'false');
-        }
-    });
-});
-</script>
