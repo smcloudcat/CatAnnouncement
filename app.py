@@ -225,7 +225,7 @@ def announcements():
     end = start + per_page
     paginated_anns = announcements_list[::-1][start:end]  # 倒序显示最新公告
     
-    return render_template('announcements.html',
+    return render_template('index.html',
                           announcements=paginated_anns,
                           current_page=page,
                           total_pages=(total + per_page - 1) // per_page,

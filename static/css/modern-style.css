@@ -1,0 +1,434 @@
+/* 现代化样式表 */
+/* 通用样式设置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding-bottom: 2rem;
+}
+
+.layui-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* 现代化卡片样式 */
+.layui-card {
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    margin-bottom: 24px;
+    border: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.layui-card:hover {
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+}
+
+.layui-card-header {
+    border-bottom: 1px solid #e8e8e8;
+    font-weight: 600;
+    padding: 15px 20px;
+    border-radius: 16px 16px 0 0;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+
+/* 导航栏样式 */
+.modern-nav {
+    padding: 15px 0;
+    position: relative;
+    background: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+}
+
+.layui-nav {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    flex-wrap: wrap;
+}
+
+.layui-nav-item a {
+    color: #333 !important;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    position: relative;
+}
+
+.layui-nav-item a:hover {
+    background-color: rgba(240, 240, 240, 0.5);
+    color: #1890ff !important;
+}
+
+.layui-nav-item a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+    height: 2px;
+    background: #1890ff;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.layui-nav-item a:hover::after {
+    transform: scaleX(1);
+}
+
+.layui-nav-user {
+    margin-left: auto;
+}
+
+.layui-nav-mobile-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    z-index: 1001;
+    color: #333;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.layui-nav-mobile-btn:hover {
+    background-color: rgba(240, 240, 240, 0.5);
+}
+
+.layui-nav-child {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.layui-nav-child a {
+    color: #333 !important;
+    padding: 12px 20px;
+    display: block;
+    transition: background-color 0.3s;
+    position: relative;
+}
+
+.layui-nav-child a:hover {
+    background-color: rgba(224, 224, 224, 0.5);
+}
+
+/* 时间线样式 */
+.layui-timeline-item {
+    padding-bottom: 24px;
+    position: relative;
+}
+
+.layui-timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, #1890ff, #0050b3);
+    border-radius: 2px;
+}
+
+.layui-timeline-item:last-child::before {
+    bottom: 24px;
+}
+
+.layui-timeline-axis {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    z-index: 1;
+    background: #1890ff;
+    color: #fff;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(24, 144, 255, 0.3);
+}
+
+.layui-timeline-content {
+    margin-left: 34px;
+    padding: 18px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+/* 公告卡片样式 */
+.announcement-card {
+    margin-top: 24px;
+}
+
+.announcement-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #333;
+}
+
+.announcement-meta {
+    color: #999;
+    font-size: 14px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.announcement-content {
+    color: #666;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 分页样式 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 24px;
+    gap: 12px;
+}
+
+.pagination a {
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+}
+
+.pagination a:hover {
+    background-color: rgba(240, 240, 240, 0.5);
+    color: #1890ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.pagination a.layui-bg-blue {
+    background-color: #1890ff;
+    color: #fff;
+    border-color: #1890ff;
+}
+
+.pagination a.layui-bg-blue:hover {
+    background-color: #40a9ff;
+    border-color: #40a9ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+/* 空状态样式 */
+.layui-empty {
+    padding: 48px 0;
+    text-align: center;
+    color: #999;
+}
+
+.layui-empty i {
+    font-size: 60px;
+    margin-bottom: 20px;
+    color: #c2c2c2;
+    display: block;
+}
+
+/* 表单样式 */
+.layui-form-item {
+    margin-bottom: 24px;
+}
+
+.layui-form-label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.layui-input-block {
+    margin-left: 120px;
+}
+
+.layui-input,
+.layui-textarea {
+    border-radius: 8px;
+    border: 1px solid #d9d9d9;
+    padding: 12px 16px;
+    transition: all 0.3s;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.layui-input:focus,
+.layui-textarea:focus {
+    border-color: #1890ff;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+    outline: none;
+}
+
+.layui-btn {
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    transition: all 0.3s;
+    border: 1px solid transparent;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.layui-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.layui-btn-sm {
+    padding: 8px 16px;
+    font-size: 13px;
+}
+
+.layui-btn.layui-bg-blue {
+    background-color: #1890ff;
+    color: #fff;
+    border-color: #1890ff;
+}
+
+.layui-btn.layui-bg-blue:hover {
+    background-color: #40a9ff;
+    border-color: #40a9ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.layui-btn.layui-bg-red {
+    background-color: #ff4d4f;
+    color: #fff;
+    border-color: #ff4d4f;
+}
+
+.layui-btn.layui-bg-red:hover {
+    background-color: #ff7875;
+    border-color: #ff7875;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.layui-btn.layui-bg-gray {
+    background-color: #f5f5f5;
+    color: #333;
+    border-color: #f5f5f5;
+}
+
+.layui-btn.layui-btn-primary {
+    background-color: transparent;
+    color: #1890ff;
+    border-color: #1890ff;
+}
+
+.layui-btn.layui-btn-primary:hover {
+    background-color: rgba(24, 144, 255, 0.05);
+    border-color: #1890ff;
+}
+
+/* 用户信息卡片样式 */
+.user-info-card {
+    margin-top: 24px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.avatar {
+    max-width: 120px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .layui-container {
+        padding: 0 10px;
+    }
+    
+    .layui-card-header {
+        padding: 14px 18px;
+    }
+    
+    .layui-timeline-content {
+        margin-left: 28px;
+        padding: 14px;
+        font-size: 14px;
+    }
+    
+    .announcement-meta {
+        flex-direction: column;
+        gap: 6px;
+    }
+    
+    .layui-input-block {
+        margin-left: 0;
+        padding: 0 10px;
+    }
+    
+    .layui-form-item .layui-form-label {
+        text-align: left;
+        margin-bottom: 6px;
+        width: auto;
+        font-size: 14px;
+    }
+    
+    .layui-btn {
+        width: 100%;
+        margin-bottom: 6px;
+    }
+    
+    .pagination a {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}

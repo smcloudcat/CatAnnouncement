@@ -5,67 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CAt公告</title>
     <link href="https://cdn.lwcat.cn/layui/css/layui.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f2f3f5;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            padding-bottom: 30px;
-        }
-        .main-container {
-            margin-top: 1.25rem; /* 20px -> 1.25rem */
-        }
-        .layui-card {
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            margin-bottom: 1.25rem; /* 20px -> 1.25rem */
-            border: none;
-        }
-        .layui-card-header {
-            border-bottom: 1px solid #f0f0f0;
-            font-weight: bold;
-            font-size: 18px;
-            padding: 15px 20px;
-            border-radius: 8px 8px 0 0;
-            background-color: #f8fafc;
-        }
-        .layui-timeline-item {
-            padding-bottom: 1.25rem; /* 20px -> 1.25rem */
-        }
-        .layui-timeline-title {
-            font-size: 16px;
-            margin-bottom: 10px;
-            color: #333;
-        }
-        .layui-timeline-content p {
-            color: #666;
-            margin-bottom: 8px;
-        }
-        .layui-timeline-content small {
-            color: #999;
-            font-size: 12px;
-        }
-        .layui-btn {
-            border-radius: 4px;
-        }
-        .layui-empty {
-            padding: 40px 0;
-            text-align: center;
-            color: #999;
-        }
-        .layui-empty i {
-            font-size: 50px;
-            margin-bottom: 15px;
-            color: #c2c2c2;
-        }
-        @media (max-width: 768px) {
-            .main-container {
-                margin-top: 10px;
-            }
-            .layui-card {
-                border-radius: 6px;
-            }
-        }
-    </style>
+    <link href="/static/css/modern-style.css" rel="stylesheet">
 </head>
 <body>
     <!-- 引入统一导航栏 -->
@@ -75,7 +15,7 @@
         <div class="layui-row">
             <div class="layui-col-md12">
                 <div class="layui-card">
-                    <div class="layui-card-header">最新公告</div>
+                  <div class="layui-card-header">最新公告</div>
                     <div class="layui-card-body">
                         {% if announcements %}
                             <ul class="layui-timeline">

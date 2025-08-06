@@ -4,79 +4,13 @@
     <meta charset="utf-8">
     <title>公告管理</title>
     <link href="https://cdn.lwcat.cn/layui/css/layui.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f2f3f5;
-            padding: 20px;
-        }
-        .main-container {
-            margin-top: 20px;
-        }
-        .layui-card {
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            margin-bottom: 25px;
-            border: none;
-        }
-        .layui-card-header {
-            border-bottom: 1px solid #f0f0f0;
-            font-weight: bold;
-            font-size: 18px;
-            padding: 15px 20px;
-            border-radius: 8px 8px 0 0;
-            background-color: #f8fafc;
-        }
-        .layui-table {
-            border-radius: 6px;
-            overflow: hidden;
-        }
-        .layui-table thead tr {
-            background-color: #f8f8f8;
-        }
-        .layui-table tbody tr:hover {
-            background-color: #fbfbfb;
-        }
-        .action-buttons {
-            display: flex;
-            gap: 5px;
-        }
-        @media (max-width: 768px) {
-            .layui-card {
-                border-radius: 6px;
-            }
-            .layui-table thead {
-                display: none;
-            }
-            .layui-table tr {
-                display: block;
-                margin-bottom: 15px;
-                border-bottom: 1px solid #eee;
-            }
-            .layui-table td {
-                display: flex;
-                justify-content: space-between;
-                padding: 10px 15px;
-                border: none;
-            }
-            .layui-table td:before {
-                content: attr(data-label);
-                font-weight: bold;
-                width: 100px;
-                min-width: 100px;
-                color: #666;
-            }
-            .action-buttons {
-                justify-content: flex-end;
-            }
-        }
-    </style>
+    <link href="/static/css/modern-style.css" rel="stylesheet">
 </head>
 <body>
     <!-- 引入统一导航栏 -->
     {% include 'navbar.html' %}
 
     <div class="layui-container main-container">
-        <h1 class="layui-font-20 layui-font-bold">公告管理</h1>
         
         <div class="layui-card">
             <div class="layui-card-header">发布新公告</div>
@@ -155,20 +89,6 @@
     <script>
         layui.use(['form'], function(){
             var form = layui.form;
-            
-            // 响应式表格处理
-            if (window.innerWidth < 768) {
-                document.querySelectorAll('.layui-table tbody tr').forEach(row => {
-                    const cells = row.querySelectorAll('td');
-                    const headers = document.querySelectorAll('.layui-table thead th');
-                    
-                    cells.forEach((cell, index) => {
-                        if (index < headers.length - 1) {
-                            cell.setAttribute('data-label', headers[index].textContent);
-                        }
-                    });
-                });
-            }
         });
     </script>
 </body>

@@ -1,5 +1,4 @@
 <!-- Modern Navigation Bar -->
-<nav class="modern-nav" aria-label="Main navigation">
     <div class="layui-container">
         <button class="layui-nav-mobile-btn" aria-label="Toggle menu" aria-expanded="false">
             <i class="layui-icon layui-icon-spread-left" aria-hidden="true"></i>
@@ -48,18 +47,17 @@
             </li>
         </ul>
     </div>
-</nav>
 <style>
-.modern-nav {
-    padding: 15px 0;
-    position: relative;
-    background: #fff;
-}
-
 .layui-nav {
     display: flex;
     align-items: center;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     background: #fff; /* Ensure background is set */
+    margin: 0 auto;
+    padding: 0 15px;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .layui-nav-item a {
@@ -105,6 +103,7 @@
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         flex-direction: column;
         z-index: 1000;
+        width: 100%; /* 确保手机端导航宽度与容器一致 */
     }
 
     .layui-nav-show {
